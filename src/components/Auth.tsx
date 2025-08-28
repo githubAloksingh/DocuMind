@@ -130,4 +130,4 @@ export function Auth({ onAuthChange }: AuthProps) {
       </Card>
     </div>
   );
-}
+}  

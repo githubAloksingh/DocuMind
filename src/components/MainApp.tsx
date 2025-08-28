@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { supabase, Document } from '@/lib/supabase';
 import { extractText } from '@/lib/textExtraction';
 import { generateSummary, generateSuggestions } from '@/lib/gemini';
@@ -16,7 +16,8 @@ interface MainAppProps {
   onSignOut: () => void;
 }
 
-type ProcessingStage = 'idle' | 'extracting' | 'summarizing' | 'suggestions' | 'complete' | 'error';
+
+type ProcessingStage = 'idle' | 'extracting' | 'ready' | 'summarizing' | 'suggestions' | 'complete' | 'error';
 
 export function MainApp({ userEmail, onSignOut }: MainAppProps) {
   const [currentFile, setCurrentFile] = useState<File | null>(null);
@@ -47,19 +48,17 @@ export function MainApp({ userEmail, onSignOut }: MainAppProps) {
       setProcessingStage('extracting');
       setProgress(0);
 
-      const text = await extractText(file, (progressPercent) => {
-        setProgress(progressPercent);
-      });
+      const text = await extractText(file, (p) => setProgress(Math.round(p)));
 
       if (!text.trim()) {
-        throw new Error('No text could be extracted from the document');
+        throw new Error('No text could be extracted. Try a clearer scan or higher-quality image.');
       }
 
       setExtractedText(text);
-      setProcessingStage('idle');
+      setProcessingStage('ready');
       setProgress(100);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (err: any) {
+      setError(err.message || 'Failed to extract text from file.');
       setProcessingStage('error');
     }
   };
@@ -69,7 +68,7 @@ export function MainApp({ userEmail, onSignOut }: MainAppProps) {
 
     try {
       setProcessingStage('summarizing');
-      setProgress(0);
+      setProgress(10);
 
       const summary = await generateSummary(extractedText, summaryLength);
       setProgress(70);
@@ -103,8 +102,8 @@ export function MainApp({ userEmail, onSignOut }: MainAppProps) {
       setProcessingStage('complete');
       setProgress(100);
       setRefreshTrigger(prev => prev + 1);
-    } catch (error: any) {
-      setError(error.message);
+    } catch (err: any) {
+      setError(err.message || 'Something went wrong during summarization.');
       setProcessingStage('error');
     }
   };
@@ -155,12 +154,10 @@ export function MainApp({ userEmail, onSignOut }: MainAppProps) {
         </div>
 
         {view === 'history' && (
-          <div className="grid grid-cols-1 lg:grid-cols-1 gap-8">
-            <DocumentHistory 
-              onDocumentSelect={handleDocumentSelect}
-              refreshTrigger={refreshTrigger}
-            />
-          </div>
+          <DocumentHistory 
+            onDocumentSelect={handleDocumentSelect}
+            refreshTrigger={refreshTrigger}
+          />
         )}
 
         {view === 'upload' && (
@@ -171,16 +168,17 @@ export function MainApp({ userEmail, onSignOut }: MainAppProps) {
                 isProcessing={processingStage !== 'idle' && processingStage !== 'complete'}
                 error={error}
               />
+              {extractedText && processingStage === 'ready' && (
+  <SummaryOptions
+    summaryLength={summaryLength}
+    onSummaryLengthChange={setSummaryLength}
+    onGenerate={handleGenerateSummary}
+    isGenerating={processingStage === 'summarizing' || processingStage === 'suggestions'}
+    disabled={!extractedText}
+  />
+)}
+
               
-              {extractedText && processingStage === 'idle' && (
-                <SummaryOptions
-                  summaryLength={summaryLength}
-                  onSummaryLengthChange={setSummaryLength}
-                  onGenerate={handleGenerateSummary}
-                  isGenerating={false}
-                  disabled={false}
-                />
-              )}
             </div>
 
             <div>
