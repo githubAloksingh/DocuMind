@@ -47,7 +47,7 @@ VITE_GEMINI_API_KEY=your_gemini_api_key
 ### Installation
 1. Clone the repository
 2. Install dependencies: `npm install`
-3. Set up environment variables
+3. Set up environment variable
 4. Start development server: `npm run dev`
 
 ## Architecture
