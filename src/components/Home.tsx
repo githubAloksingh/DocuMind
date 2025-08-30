@@ -53,7 +53,7 @@ export function Home() {
         className="bg-white rounded-t-3xl shadow-xl py-16 px-6 sm:px-12 lg:px-20 text-gray-800"
       >
         <h2 className="text-3xl sm:text-4xl font-extrabold text-center mb-12">
-          Why Choose <span className="text-orange-500">Document Summary Assistant</span> ?
+          Why Choose <span className="text-orange-500"></span> ?
         </h2>
 
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
