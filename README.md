@@ -1,4 +1,5 @@
-# DocuMind
+# Document-Summary-Assistant-Assignment-3
+
 
 A modern, full-stack web application that uses AI to extract text from documents and generate intelligent summaries with improvement suggestions.
 
