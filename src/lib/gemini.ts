@@ -16,7 +16,7 @@ export async function generateSummary(
     throw new Error('Gemini API key is required. Please add your API key to continue.');
   }
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const lengthInstructions = {
     short: 'in 2-3 concise sentences, focusing only on the most critical points (max 60 words)',
@@ -48,7 +48,7 @@ export async function generateSuggestions(summary: string, originalText: string)
     throw new Error('Gemini API key is required');
   }
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const prompt = `
     Based on the following summary and original text, provide exactly 3 specific improvement suggestions.
