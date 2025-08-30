@@ -1,4 +1,4 @@
-# Document Summary Assistant
+# DocuMind
 
 A modern, full-stack web application that uses AI to extract text from documents and generate intelligent summaries with improvement suggestions.
 
@@ -25,7 +25,6 @@ A modern, full-stack web application that uses AI to extract text from documents
 - **Lucide React** for icons
 - **React Dropzone** for file uploads
 
-
 ### AI & Processing
 - **Google Gemini API** for text summarization and suggestions
 - **PDF.js** for PDF text extraction
@@ -40,12 +39,10 @@ A modern, full-stack web application that uses AI to extract text from documents
 ### Environment Variables
 Create a `.env` file:
 
-
-
+```bash
 # Google Gemini API Configuration  
 VITE_GEMINI_API_KEY=your_gemini_api_key
 ```
-
 
 ### Installation
 1. Clone the repository
@@ -53,14 +50,20 @@ VITE_GEMINI_API_KEY=your_gemini_api_key
 3. Set up environment variables
 4. Start development server: `npm run dev`
 
+## Architecture
+
 ### Processing Pipeline
 1. **File Upload**: Validate file type and size
 2. **Text Extraction**: PDF.js or Tesseract.js based on file type
 3. **AI Processing**: Gemini API for summary generation
+4. **Suggestion Generation**: AI-powered improvement recommendations
+5. **Storage**: Save to Supabase with user association
 
 ### Security Features
 - **File Validation**: Type and size restrictions
 - **API Protection**: Environment variable configuration
+
+## Usage
 
 ## Usage
 1. **Upload Document**: Drag and drop a PDF or image file
@@ -85,14 +88,12 @@ src/
 - **ProcessingStatus**: Real-time processing feedback
 - **DocumentViewer**: Tabbed interface for viewing results
 
-
 ## API Integration
 
 ### Google Gemini API
 - **Model**: gemini-pro for text generation
 - **Rate Limits**: Free tier limitations apply
 - **Error Handling**: Comprehensive error messages and fallbacks
-
 
 ## Contributing
 
