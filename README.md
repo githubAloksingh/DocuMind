@@ -41,9 +41,11 @@ A modern, full-stack web application that uses AI to extract text from documents
 Create a `.env` file:
 
 
+
 # Google Gemini API Configuration  
 VITE_GEMINI_API_KEY=your_gemini_api_key
 ```
+
 
 ### Installation
 1. Clone the repository
