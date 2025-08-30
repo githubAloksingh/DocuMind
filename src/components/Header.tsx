@@ -19,7 +19,7 @@ export function Header() {
             </div>
             <div>
               <h1 className="text-2xl font-extrabold text-white tracking-wide">
-                Docu<span className="text-yellow-200">Mind</span>
+                Document<span className="text-yellow-200">Summary Assistant</span>
               </h1>
               <p className="text-sm text-orange-100">AI-powered document insights</p>
             </div>
