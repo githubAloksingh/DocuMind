@@ -1,51 +1,47 @@
-import React from 'react';
-import { Button } from '@/components/ui/button';
-import { supabase } from '@/lib/supabase';
-import { FileText, LogOut, User } from 'lucide-react';
+import React from "react";
+import { FileText } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface HeaderProps {
-  userEmail?: string;
-  onSignOut: () => void;
-}
+export function Header() {
+  const location = useLocation();
+  const navigate = useNavigate();
 
-export function Header({ userEmail, onSignOut }: HeaderProps) {
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    onSignOut();
-  };
+  const isSummarizerPage = location.pathname === "/summarizer";
 
   return (
-    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <header className="sticky top-0 z-50 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-              <FileText className="w-5 h-5 text-white" />
+        <div className="flex justify-between items-center h-20">
+          {/* Logo + Title */}
+          <div className="flex items-center space-x-4">
+            <div className="w-12 h-12 bg-white/20 backdrop-blur-md rounded-xl flex items-center justify-center shadow-md hover:scale-105 transition-transform duration-300">
+              <FileText className="w-7 h-7 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-900">
-                Document Summary Assistant
+              <h1 className="text-2xl font-extrabold text-white tracking-wide">
+                Docu<span className="text-yellow-200">Mind</span>
               </h1>
-              <p className="text-xs text-gray-500">
-                AI-powered document analysis
-              </p>
+              <p className="text-sm text-orange-100">AI-powered document insights</p>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <User className="w-4 h-4" />
-              <span className="hidden sm:inline">{userEmail}</span>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={handleSignOut}
-              className="text-gray-600 hover:text-gray-900"
-            >
-              <LogOut className="w-4 h-4 mr-1" />
-              <span className="hidden sm:inline">Sign Out</span>
-            </Button>
+          {/* Navigation / CTA */}
+          <div className="flex items-center space-x-6">
+            {!isSummarizerPage ? (
+              <button
+                onClick={() => navigate("/summarizer")}
+                className="hidden sm:block px-5 py-2 rounded-full bg-white text-orange-600 font-semibold shadow-md hover:bg-orange-50 transition"
+              >
+                Summarize Now
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/")}
+                className="hidden sm:block px-5 py-2 rounded-full bg-white text-orange-600 font-semibold shadow-md hover:bg-orange-50 transition"
+              >
+                Home
+              </button>
+            )}
           </div>
         </div>
       </div>

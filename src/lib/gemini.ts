@@ -19,9 +19,9 @@ export async function generateSummary(
   const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const lengthInstructions = {
-    short: 'in 2-3 concise sentences, focusing only on the most critical points',
-    medium: 'in 1-2 well-structured paragraphs, covering main ideas and key details',
-    long: 'in 3-4 comprehensive paragraphs, providing thorough analysis and context'
+    short: 'in 2-3 concise sentences, focusing only on the most critical points (max 60 words)',
+    medium: 'in 1-2 well-structured paragraphs, covering main ideas and key details (max 150 words)',
+    long: 'in 3-4 comprehensive paragraphs, providing thorough analysis and context (max 300 words)'
   };
 
   const prompt = `
@@ -30,7 +30,7 @@ export async function generateSummary(
     Use bullet points for key takeaways when appropriate.
     
     Text to summarize:
-    ${text.slice(0, 10000)} ${text.length > 10000 ? '...(truncated for processing)' : ''}
+    ${text.slice(0, 50000)} ${text.length > 50000 ? '...(truncated for processing)' : ''}
   `;
 
   try {

@@ -36,9 +36,6 @@ A modern, full-stack web application that uses AI to extract text from documents
 - **PDF.js** for PDF text extraction
 - **Tesseract.js** for OCR on images
 
-### Deployment
-- **Bolt Hosting** for frontend deployment
-- **Supabase** for backend infrastructure
 
 ## Setup Instructions
 
